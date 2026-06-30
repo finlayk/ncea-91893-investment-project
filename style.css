@@ -8,6 +8,8 @@
 
 
 body {
+    background: var(--bg-page);
+    color: var(--text-main);
     font-family: "Inter", system-ui, sans-serif;
 }
 
@@ -20,6 +22,18 @@ h3,
 
 
 .card {
+  background: var(--bg-card);
+  color: var(--text-main);
   padding: 20px;
-  margin: 10px;
+  margin: 10px; 
+}
+
+
+p {
+    color: var(--text-muted);
+}
+
+button {
+    background: var(--accent);
+    color: var(--bg-page);
 }
