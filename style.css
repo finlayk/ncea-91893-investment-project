@@ -17,3 +17,9 @@ h3,
 .card-title {
     font-family: "Rubik", "Inter", sans-serif;
 }
+
+
+.card {
+  padding: 20px;
+  margin: 10px;
+}
