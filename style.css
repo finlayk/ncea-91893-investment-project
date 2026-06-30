@@ -1,0 +1,19 @@
+:root {
+  --bg-page: #15120E;
+  --bg-card: #61252C;
+  --text-main: #F5F4F4;
+  --text-muted: #BDB0A0;
+  --accent: #DAD9CF;
+}
+
+
+body {
+    font-family: "Inter", system-ui, sans-serif;
+}
+
+h1,
+h2,
+h3,
+.card-title {
+    font-family: "Rubik", "Inter", sans-serif;
+}
