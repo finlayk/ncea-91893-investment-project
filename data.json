@@ -1,0 +1,7 @@
+{
+  "assets": [
+    { "id": "bitcoin", "name": "Bitcoin", "priceNow": 96000, "priceOneWeekAgo": 93500, "priceOneMonthAgo": 88000, "priceOneYearAgo": 61000 },
+    { "id": "ethereum", "name": "Ethereum", "priceNow": 3400, "priceOneWeekAgo": 3300, "priceOneMonthAgo": 3100, "priceOneYearAgo": 2600 },
+    { "id": "solana", "name": "Solana", "priceNow": 210, "priceOneWeekAgo": 198, "priceOneMonthAgo": 175, "priceOneYearAgo": 140 }
+  ]
+}

@@ -1,39 +1,100 @@
+/* Custom properties - this is one of the two advanced techniques */
 :root {
   --bg-page: #15120E;
   --bg-card: #61252C;
   --text-main: #F5F4F4;
   --text-muted: #BDB0A0;
   --accent: #DAD9CF;
+  --radius: 10px;
+  --spacing: 8px;
 }
 
+* { box-sizing: border-box; } /* this makes the padding not ruin the element's width */
 
 body {
-    background: var(--bg-page);
-    color: var(--text-main);
-    font-family: "Inter", system-ui, sans-serif;
-}
-
-h1,
-h2,
-h3,
-.card-title {
-    font-family: "Rubik", "Inter", sans-serif;
-}
-
-
-.card {
-  background: var(--bg-card);
+  margin: 0;
+  background: var(--bg-page);
   color: var(--text-main);
-  padding: 20px;
-  margin: 10px; 
+  font-family: "Inter", system-ui, sans-serif;
+  line-height: 1.5;
 }
 
+h1, h2, h3, .card-title {
+  font-family: "Rubik", "Inter", sans-serif; /* headings use the display font */
+}
 
-p {
-    color: var(--text-muted);
+.disclaimer {
+  background: #3a2e12;
+  color: #f5c66b;
+  text-align: center;
+  padding: calc(var(--spacing) * 1.5);
+  font-size: 0.9rem;
+}
+.disclaimer p { margin: 0; }
+
+.site-header {
+  padding: calc(var(--spacing) * 4) calc(var(--spacing) * 3);
+  text-align: center;
+}
+.site-header h1 { margin: 0 0 var(--spacing) 0; font-size: 1.8rem; }
+.subtitle { color: var(--text-muted); margin: 0; }
+
+/* The interface will be displayed as a column by default */
+main {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 3);
+  padding: 0 calc(var(--spacing) * 3) calc(var(--spacing) * 6);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.input-panel, .results-dashboard {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: calc(var(--spacing) * 3);
+}
+
+.field { display: flex; flex-direction: column; gap: 4px; margin-bottom: calc(var(--spacing) * 2); }
+label { font-size: 0.9rem; color: var(--text-muted); }
+
+input, select, button {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  padding: calc(var(--spacing) * 1.25);
+  border-radius: var(--radius);
+  border: 1px solid #2f3868;
+  background: var(--bg-page);
+  color: var(--text-main);
 }
 
 button {
-    background: var(--accent);
-    color: var(--bg-page);
+  background: var(--accent);
+  color: var(--bg-page);
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* The interface shows a focus outline for keyboard users - demonstrating accessibility */
+button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.status-message { min-height: 1.2em; color: var(--text-muted); }
+
+.card {
+  background: var(--bg-page);
+  color: var(--text-main);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 10px;
+  border-left: 4px solid var(--accent);
+}
+.card p { margin: 4px 0; }
+
+/* For wider screens, display cards in a 3-column grid */
+@media (min-width: 64rem) {
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); }
 }
