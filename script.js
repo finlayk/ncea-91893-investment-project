@@ -55,13 +55,14 @@ function renderCards(amount, asset) {
   resultsCards.innerHTML = ""; // clear old results before showing new ones
 
   timeframes.forEach((tf) => {
-    const result = calculatePastValue(amount, tf.priceThen, asset.priceNow); // do the math for this timeframe
+    const result = calculatePastValue(amount, tf.priceThen, asset.priceNow);
     const card = document.createElement("article"); // one card per timeframe
     card.className = "card";
+    const changeClass = result.percentChange >= 0 ? "positive" : "negative"; // colour coding for gain/loss
     card.innerHTML = `
       <h3 class="card-title">If invested ${tf.label}</h3>
       <p>$${result.value.toFixed(0)}</p>
-      <p>${result.percentChange.toFixed(1)}% change</p>
+      <p class="${changeClass}">${result.percentChange.toFixed(1)}% change</p>
     `;
     resultsCards.appendChild(card);
   });

@@ -1,7 +1,7 @@
 {
   "assets": [
-    { "id": "bitcoin", "name": "Bitcoin", "priceNow": 96000, "priceOneWeekAgo": 93500, "priceOneMonthAgo": 88000, "priceOneYearAgo": 61000 },
-    { "id": "ethereum", "name": "Ethereum", "priceNow": 3400, "priceOneWeekAgo": 3300, "priceOneMonthAgo": 3100, "priceOneYearAgo": 2600 },
-    { "id": "solana", "name": "Solana", "priceNow": 210, "priceOneWeekAgo": 198, "priceOneMonthAgo": 175, "priceOneYearAgo": 140 }
+    { "id": "bitcoin", "name": "Bitcoin", "priceNow": 110481, "priceOneWeekAgo": 113537, "priceOneMonthAgo": 106224, "priceOneYearAgo": 199409 },
+    { "id": "ethereum", "name": "Ethereum", "priceNow": 3270, "priceOneWeekAgo": 3305, "priceOneMonthAgo": 2790, "priceOneYearAgo": 6330 },
+    { "id": "solana", "name": "Solana", "priceNow": 127, "priceOneWeekAgo": 133, "priceOneMonthAgo": 125, "priceOneYearAgo": 305 }
   ]
 }

@@ -7,6 +7,8 @@
   --accent: #DAD9CF;
   --radius: 10px;
   --spacing: 8px;
+  --positive: #7FD98A; /* green for gains */
+  --negative: #E88C7D; /* red for losses, but also avoids clashing with the warm colour palette */
 }
 
 * { box-sizing: border-box; } /* this makes the padding not ruin the element's width */
@@ -61,9 +63,10 @@ label { font-size: 0.9rem; color: var(--text-muted); }
 input, select, button {
   font-family: "Inter", sans-serif;
   font-size: 1rem;
-  padding: calc(var(--spacing) * 1.25);
+  padding: calc(var(--spacing) * 1.5) calc(var(--spacing) * 1.25); /* more vertical padding */
+  min-height: 44px; /* ensures touch target meets the accessibility minimum of 44px */
   border-radius: var(--radius);
-  border: 1px solid #2f3868;
+  border: 1px solid var(--text-muted);
   background: var(--bg-page);
   color: var(--text-main);
 }
@@ -76,11 +79,16 @@ button {
   font-weight: 600;
 }
 
-/* The interface shows a focus outline for keyboard users - demonstrating accessibility */
-button:focus-visible, input:focus-visible, select:focus-visible {
-  outline: 2px solid var(--accent);
+
+/* Visible focus indicator for keyboard users - demonstrating accessibility */
+input:focus-visible,
+select:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--accent);
   outline-offset: 2px;
+  border-radius: var(--radius);
 }
+
 
 .status-message { min-height: 1.2em; color: var(--text-muted); }
 
@@ -88,11 +96,15 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   background: var(--bg-page);
   color: var(--text-main);
   border-radius: var(--radius);
-  padding: 20px;
-  margin: 10px;
+  padding: calc(var(--spacing) * 2.5);
+  margin: calc(var(--spacing) * 1.25);
   border-left: 4px solid var(--accent);
 }
 .card p { margin: 4px 0; }
+
+/* colour codes gain vs loss, based on user feedback that the plain text didn't stand out enough */
+.positive { color: var(--positive); font-weight: 600; }
+.negative { color: var(--negative); font-weight: 600; }
 
 /* For wider screens, display cards in a 3-column grid */
 @media (min-width: 64rem) {
