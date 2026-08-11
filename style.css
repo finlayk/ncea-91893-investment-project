@@ -1,10 +1,11 @@
 /* Custom properties - this is one of the two advanced techniques */
 :root {
-  --bg-page: #15120E;
-  --bg-card: #61252C;
-  --text-main: #F5F4F4;
-  --text-muted: #BDB0A0;
-  --accent: #DAD9CF;
+  --bg-page: #172A3A;     /* deep space blue background for the page */
+  --bg-card: #29648E;    /* lighter baltic blue for cards, to make them stand out */
+  --text-main: #f4f6f8; /* platinum for main text, to reduce eye strain */
+  --text-muted: #9EA3BO; /* cool steel */
+  --accent: #f4f6f8; /* platinum for accent, to make it pop against the dark background */
+  --accent-hover: #3D7BA5; /* cool steel for hover state, to make it pop against the dark background */
   --radius: 10px;
   --spacing: 8px;
   --positive: #7FD98A; /* green for gains */
@@ -26,8 +27,8 @@ h1, h2, h3, .card-title {
 }
 
 .disclaimer {
-  background: #3a2e12;
-  color: #f5c66b;
+  background: var(--bg-card);
+  color: var(--text-main);
   text-align: center;
   padding: calc(var(--spacing) * 1.5);
   font-size: 0.9rem;
@@ -77,6 +78,12 @@ button {
   border: none;
   cursor: pointer;
   font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+
+button:hover {
+  background: var(--accent-hover);
 }
 
 
