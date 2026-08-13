@@ -49,8 +49,7 @@ function getComparisonDates() {
 
 
 async function fetchCurrentPrices(coinIds) {
-  const url = `${COINGECKO_BASE}/simple/price?ids=${coinIds.join(",")}&vs_currencies=usd&x_cg_demo_api_key=${COINGECKO_API_KEY}`;
-  const response = await fetch(url);
+  const url = `${COINGECKO_BASE}/simple/price?ids=${coinIds.join(",")}&vs_currencies=nzd&x_cg_demo_api_key=${COINGECKO_API_KEY}`;  const response = await fetch(url);
   if (!response.ok) {
     throw new Error('CoinGecko current price error: ${response.status}');
   }
@@ -68,7 +67,7 @@ async function fetchHistoricalPrice(coinid, dateStr) {
   if (!data.market_data) {
     throw new Error('No historical data for ${coinid} on ${dateStr}');
   }
-  return data.market_data.current_price.usd;
+  return data.market_data.current_price.nzd;
   }
   
 
@@ -90,7 +89,7 @@ async function fetchLiveAssetData(baseAssets) {
       return {
         id: asset.id,
         name: asset.name,
-        priceNow: currentPrices[asset.id].usd,
+        priceNow: currentPrices[asset.id].nzd,
         priceOneWeekAgo,
         priceOneMonthAgo,
         priceOneYearAgo,
@@ -101,7 +100,18 @@ async function fetchLiveAssetData(baseAssets) {
   return LiveAssets;
 }
 
+// Builds a continuously scrolling ticker of all asset prices at the top of the page
+function startPriceTicker(assets) {
+  const track = document.getElementById("ticker-track");
+  if (!track || assets.length === 0) return;
 
+  const itemsHtml = assets
+    .map((asset) => `<span class="ticker-item">${asset.name}: $${asset.priceNow.toLocaleString()} NZD</span>`)
+    .join("");
+
+  // Duplicate the content so the loop is seamless (scrolls exactly 50% then resets invisibly)
+  track.innerHTML = itemsHtml + itemsHtml;
+}
 
 // Fetches the asset data file and fills the dropdown once it's loaded
 async function loadAssetData() {
@@ -123,8 +133,8 @@ async function loadAssetData() {
       statusMessage.textContent = "Couldn't reach live prices - showing saved data instead.";
     }
 
-
     populateAssetDropdown(assetData);                   // build the dropdown options now data exists
+    startPriceTicker(assetData);                         // start the scrolling price ticker
   } catch (error) {
     statusMessage.textContent = "Couldn't load asset data. Please try again later."; // error state
     console.error(error); // this logs the actual error to console for debugging

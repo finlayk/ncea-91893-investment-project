@@ -3,7 +3,7 @@
   --bg-page: #172A3A;     /* deep space blue background for the page */
   --bg-card: #29648E;    /* lighter baltic blue for cards, to make them stand out */
   --text-main: #f4f6f8; /* platinum for main text, to reduce eye strain */
-  --text-muted: #9EA3BO; /* cool steel */
+  --text-muted: #9EA3B0; /* cool steel */
   --accent: #f4f6f8; /* platinum for accent, to make it pop against the dark background */
   --accent-hover: #3D7BA5; /* cool steel for hover state, to make it pop against the dark background */
   --radius: 10px;
@@ -42,6 +42,36 @@ h1, h2, h3, .card-title {
 .site-header h1 { margin: 0 0 var(--spacing) 0; font-size: 1.8rem; }
 .subtitle { color: var(--text-muted); margin: 0; }
 
+
+.price-ticker {
+  width: 100%;
+  overflow: hidden;
+  background: var(--bg-card);
+  padding: calc(var(--spacing) * 1.25) 0;
+}
+
+.ticker-track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: ticker-scroll 18s linear infinite;
+}
+
+.ticker-item {
+  padding: 0 calc(var(--spacing) * 4);
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Respects users who've asked their OS/browser to reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
+}
+
 /* The interface will be displayed as a column by default */
 main {
   display: flex;
@@ -72,6 +102,22 @@ input, select, button {
   color: var(--text-main);
 }
 
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23f4f6f8' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right calc(var(--spacing) * 1.5) center;
+  padding-right: calc(var(--spacing) * 4); /* room for the arrow */
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+select:hover {
+  border-color: var(--accent);
+}
+
+
 button {
   background: var(--accent);
   color: var(--bg-page);
@@ -86,6 +132,35 @@ button:hover {
   background: var(--accent-hover);
 }
 
+
+.calculate-btn {
+  background-color: var(--accent);
+  color: var(--bg-page);
+  border: none;
+  padding: calc(var(--spacing) * 1.5) calc(var(--spacing) * 3);
+  min-height: 44px;
+  margin-top: calc(var(--spacing) * 1); /* small gap so the hover lift has room */
+  border-radius: var(--radius);
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(244, 246, 248, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.calculate-btn:hover {
+  background-color: var(--accent-hover);
+  color: var(--text-main);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(244, 246, 248, 0.35);
+}
+
+.calculate-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(244, 246, 248, 0.2);
+}
 
 /* Visible focus indicator for keyboard users - demonstrating accessibility */
 input:focus-visible,
@@ -105,8 +180,14 @@ button:focus-visible {
   border-radius: var(--radius);
   padding: calc(var(--spacing) * 2.5);
   margin: calc(var(--spacing) * 1.25);
-  border-left: 4px solid var(--accent);
+  transition: box-shadow 0.25s ease;
 }
+
+.card:hover {
+  box-shadow: 0 0 0 1px var(--accent), 0 10px 30px rgba(244, 246, 248, 0.25);
+}
+
+
 .card p { margin: 4px 0; }
 
 /* colour codes gain vs loss, based on user feedback that the plain text didn't stand out enough */
