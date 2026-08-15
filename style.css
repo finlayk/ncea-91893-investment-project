@@ -43,28 +43,82 @@ h1, h2, h3, .card-title {
 .subtitle { color: var(--text-muted); margin: 0; }
 
 
+.landing {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  max-width: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: calc(var(--spacing) * 1);
+  padding: calc(var(--spacing) * 3);
+}
+
+.landing::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background:
+  radial-gradient(circle at 20% 30%, var(--bg-card) 0%, transparent 45%),
+  radial-gradient(circle at 80% 70%, var(--accent-hover) 0%, transparent 45%);
+  opacity: 0.5;
+  animation: drift 14s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+
+.landing h1,
+.landing .subtitle,
+.landing .calculate-btn {
+  position: relative;
+  z-index: 1; /* keeps the content above the animated background */
+}
+
+@keyframes drift {
+  from { transform: translate(-4%, -3%) scale(1); }
+  to { transform: translate(4%, 3%) scale(1.12); }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .landing::before { animation: none; }
+}
+
+
+.landing .subtitle {
+  max-width: 500px;
+  margin: 0;
+}
+
+
 .price-ticker {
   width: 100%;
   overflow: hidden;
   background: var(--bg-card);
   padding: calc(var(--spacing) * 1.25) 0;
+  min-height: 44px;
 }
 
 .ticker-track {
   display: inline-flex;
   white-space: nowrap;
   animation: ticker-scroll 18s linear infinite;
+  will-change: transform;
 }
 
 .ticker-item {
+  flex-shrink: 0;
   padding: 0 calc(var(--spacing) * 4);
   font-weight: 600;
   color: var(--text-main);
 }
-
 @keyframes ticker-scroll {
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  to { transform: translateX(-33.333%); }
 }
 
 /* Respects users who've asked their OS/browser to reduce motion */
@@ -148,6 +202,8 @@ button:hover {
   cursor: pointer;
   box-shadow: 0 4px 20px rgba(244, 246, 248, 0.25);
   transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  display: inline-block;
+  text-decoration: none;
 }
 
 .calculate-btn:hover {
@@ -172,7 +228,46 @@ button:focus-visible {
 }
 
 
-.status-message { min-height: 1.2em; color: var(--text-muted); }
+.status-message { min-height: 0; margin: 0;color: var(--text-muted); }
+
+.results-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: calc(var(--spacing) * 0.5);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-main);
+  padding: 4px 10px;
+  border-radius: calc(var(--radius) / 2);
+  margin: 0;
+}
+
+.status-badge::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.status-badge.live::before {
+  background: var(--accent);
+}
+
+.status-badge.fallback::before {
+  background: var(--negative);
+}
+
+
 
 .card {
   background: var(--bg-page);

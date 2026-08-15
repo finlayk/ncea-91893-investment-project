@@ -3,6 +3,7 @@ const assetSelect = document.getElementById("asset");
 const form = document.getElementById("investment-form");
 const statusMessage = document.getElementById("status-message");
 const resultsCards = document.getElementById("results-cards");
+const dataStatusBadge = document.getElementById("data-status-badge");
 
 // This holds the asset data once it has loaded from data.json, it starts empty
 let assetData = [];
@@ -110,7 +111,7 @@ function startPriceTicker(assets) {
     .join("");
 
   // Duplicate the content so the loop is seamless (scrolls exactly 50% then resets invisibly)
-  track.innerHTML = itemsHtml + itemsHtml;
+  track.innerHTML = itemsHtml + itemsHtml + itemsHtml;
 }
 
 // Fetches the asset data file and fills the dropdown once it's loaded
@@ -125,16 +126,21 @@ async function loadAssetData() {
     const localAssets = data.assets;                             // store the local asset data for later use
 
     try {
-      assetData = await fetchLiveAssetData(localAssets); // fetch live prices and historical data
-      statusMessage.textContent = "Showing live prices."; // show that live data is being used
-    } catch (liveError) {
-      console.warn("Live price fetch failed, using saved data.json prices instead.", liveError.message);
-      assetData = localAssets; // fallback to local data if live fetch fails
-      statusMessage.textContent = "Couldn't reach live prices - showing saved data instead.";
-    }
+  assetData = await fetchLiveAssetData(localAssets); // fetch live prices and historical data
+  dataStatusBadge.textContent = "Showing live prices.";
+  dataStatusBadge.classList.remove("fallback");
+  dataStatusBadge.classList.add("live");
+} catch (liveError) {
+  console.warn("Live price fetch failed, using saved data.json prices instead.", liveError.message);
+  assetData = localAssets; // fallback to local data if live fetch fails
+  dataStatusBadge.textContent = "Couldn't reach live prices - showing saved data.";
+  dataStatusBadge.classList.remove("live");
+  dataStatusBadge.classList.add("fallback");
+}
 
-    populateAssetDropdown(assetData);                   // build the dropdown options now data exists
-    startPriceTicker(assetData);                         // start the scrolling price ticker
+populateAssetDropdown(assetData);
+startPriceTicker(assetData);
+statusMessage.textContent = ""; // clear "Loading asset data…" now the badge shows data status separately
   } catch (error) {
     statusMessage.textContent = "Couldn't load asset data. Please try again later."; // error state
     console.error(error); // this logs the actual error to console for debugging
