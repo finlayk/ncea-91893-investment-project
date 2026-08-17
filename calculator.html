@@ -51,12 +51,15 @@
       <p id="status-message" class="status-message" aria-live="polite"></p>
 
       <!-- Result cards get injected here by script.js -->
-      <section class="results-dashboard" aria-labelledby="results-heading">
+      <section class="results-dashboard hidden" id="results-dashboard" aria-labelledby="results-heading">
   <div class="results-header">
     <h2 id="results-heading">Results</h2>
     <p id="data-status-badge" class="status-badge" aria-live="polite"></p>
   </div>
   <div class="cards" id="results-cards"></div>
+  <div class="chart-container" id="results-chart" aria-hidden="true">
+  <p class="chart-heading">Price trend (1 year ago → now)</p>
+</div>
     </section>
     </main>
 

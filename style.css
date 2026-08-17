@@ -16,6 +16,9 @@
 
 body {
   margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   background: var(--bg-page);
   color: var(--text-main);
   font-family: "Inter", system-ui, sans-serif;
@@ -32,6 +35,7 @@ h1, h2, h3, .card-title {
   text-align: center;
   padding: calc(var(--spacing) * 1.5);
   font-size: 0.9rem;
+  margin-top: auto;
 }
 .disclaimer p { margin: 0; }
 
@@ -132,6 +136,7 @@ main {
   flex-direction: column;
   gap: calc(var(--spacing) * 3);
   padding: 0 calc(var(--spacing) * 3) calc(var(--spacing) * 6);
+  width: 100%;
   max-width: 900px;
   margin: 0 auto;
 }
@@ -288,6 +293,74 @@ button:focus-visible {
 /* colour codes gain vs loss, based on user feedback that the plain text didn't stand out enough */
 .positive { color: var(--positive); font-weight: 600; }
 .negative { color: var(--negative); font-weight: 600; }
+
+.chart-container {
+  margin-top: calc(var(--spacing) * 5);
+  padding: calc(var(--spacing) * 2);
+}
+
+.chart-heading {
+  font-size: 0.9rem;
+  color: var(--text-main);
+  margin: 0 0 calc(var(--spacing) * 3) 0;
+}
+
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: calc(var(--spacing) * 3);
+  height: 160px;
+}
+
+.chart-bar-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.chart-bar-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: calc(var(--spacing) * 1);
+  letter-spacing: 0.01em;
+}
+
+.chart-bar {
+  width: 100%;
+  border-radius: var(--radius) var(--radius) 0 0;
+  min-height: 4px;
+  transition: height 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+  overflow: hidden;
+  background: var(--accent-hover); /* muted blue for past timeframes */
+}
+
+.chart-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(244, 246, 248, 0.25), transparent 60%);
+}
+
+.chart-bar.now {
+  background: var(--accent); /* bright highlight for the "Now" bar */
+}
+
+.chart-bar-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-top: calc(var(--spacing) * 1);
+}
+
+.hidden {
+  display: none;
+}
+
 
 /* For wider screens, display cards in a 3-column grid */
 @media (min-width: 64rem) {

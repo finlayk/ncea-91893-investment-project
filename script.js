@@ -4,6 +4,7 @@ const form = document.getElementById("investment-form");
 const statusMessage = document.getElementById("status-message");
 const resultsCards = document.getElementById("results-cards");
 const dataStatusBadge = document.getElementById("data-status-badge");
+const resultsDashboard = document.getElementById("results-dashboard");
 
 // This holds the asset data once it has loaded from data.json, it starts empty
 let assetData = [];
@@ -158,7 +159,6 @@ function populateAssetDropdown(assets) {
   });
 }
 
-// Builds and displays the three result cards (1 week / 1 month / 1 year)
 function renderCards(amount, asset) {
   const timeframes = [
     { label: "1 week ago", priceThen: asset.priceOneWeekAgo },
@@ -182,20 +182,63 @@ function renderCards(amount, asset) {
   });
 }
 
+// Draws a bar chart comparing what the investment would be worth at each timeframe
+function renderChart(amount, asset) {
+  const chartContainer = document.getElementById("results-chart");
+  if (!chartContainer) return;
+
+  const bars = [
+    { label: "1yr ago", value: calculatePastValue(amount, asset.priceOneYearAgo, asset.priceNow).value },
+    { label: "1mo ago", value: calculatePastValue(amount, asset.priceOneMonthAgo, asset.priceNow).value },
+    { label: "1wk ago", value: calculatePastValue(amount, asset.priceOneWeekAgo, asset.priceNow).value },
+    { label: "Now", value: amount },
+  ];
+
+  const maxValue = Math.max(...bars.map((b) => b.value), amount);
+
+  chartContainer.innerHTML = `<p class="chart-heading">If you'd invested $${amount.toLocaleString()} at each point:</p>`;
+
+  const barsWrap = document.createElement("div");
+  barsWrap.className = "chart-bars";
+
+  bars.forEach((b) => {
+    const heightPercent = (b.value / maxValue) * 100;
+    const isNow = b.label === "Now";
+
+const wrap = document.createElement("div");
+wrap.className = "chart-bar-wrap";
+wrap.innerHTML = `
+  <span class="chart-bar-value">$${b.value.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+  <div class="chart-bar ${isNow ? "now" : ""}" style="height: 0%"></div>
+  <span class="chart-bar-label">${b.label}</span>
+`;
+    barsWrap.appendChild(wrap);
+
+    // Set the real height on the next frame so the browser animates from 0% up to the target height
+    requestAnimationFrame(() => {
+      wrap.querySelector(".chart-bar").style.height = `${heightPercent}%`;
+    });
+  });
+
+  chartContainer.appendChild(barsWrap);
+}
+
 // Runs when the form is submitted
 form.addEventListener("submit", (event) => {
-  event.preventDefault(); // stop the page from refreshing (default form behaviour)
+  event.preventDefault();
 
-  const amount = Number(document.getElementById("amount").value); // read the typed amount
-  const selectedId = assetSelect.value;                             // read the chosen asset id
-  const asset = assetData.find((a) => a.id === selectedId);         // find the matching asset object
+  const amount = Number(document.getElementById("amount").value);
+  const selectedId = assetSelect.value;
+  const asset = assetData.find((a) => a.id === selectedId);
 
   if (!asset || !amount || amount <= 0) {
-    statusMessage.textContent = "Enter a valid amount and select an asset."; // basic validation
+    statusMessage.textContent = "Enter a valid amount and select an asset.";
     return;
   }
 
-  renderCards(amount, asset); // show the results
+  resultsDashboard.classList.remove("hidden"); // reveal results now that we have valid data
+  renderCards(amount, asset);
+  renderChart(amount, asset);
 });
 
 // Kick things off as soon as the script loads, so the dropdown is ready before the user does anything
