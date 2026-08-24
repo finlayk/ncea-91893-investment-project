@@ -5,6 +5,7 @@ const statusMessage = document.getElementById("status-message");
 const resultsCards = document.getElementById("results-cards");
 const dataStatusBadge = document.getElementById("data-status-badge");
 const resultsDashboard = document.getElementById("results-dashboard");
+const calculationAnnouncement = document.getElementById("calculation-announcement");
 
 // This holds the asset data once it has loaded from data.json, it starts empty
 let assetData = [];
@@ -205,6 +206,8 @@ function renderChart(amount, asset) {
     const heightPercent = (b.value / maxValue) * 100;
     const isNow = b.label === "Now";
 
+
+    
 const wrap = document.createElement("div");
 wrap.className = "chart-bar-wrap";
 wrap.innerHTML = `
@@ -239,7 +242,11 @@ form.addEventListener("submit", (event) => {
   resultsDashboard.classList.remove("hidden"); // reveal results now that we have valid data
   renderCards(amount, asset);
   renderChart(amount, asset);
+   calculationAnnouncement.textContent = `Results updated for $${amount} invested in ${asset.name}.`;
 });
+
+
+
 
 // Kick things off as soon as the script loads, so the dropdown is ready before the user does anything
 loadAssetData();
