@@ -1,15 +1,15 @@
-/* Custom properties - this is one of the two advanced techniques */
+/* Below is an example of custom properties - this is one of the two advanced techniques */
 :root {
   --bg-page: #172A3A;     /* deep space blue background for the page */
-  --bg-card: #29648E;    /* lighter baltic blue for cards, to make them stand out */
-  --text-main: #f4f6f8; /* platinum for main text, to reduce eye strain */
+  --bg-card: #1E4A5C;    /* lighter blue for cards, to make them stand out */
+  --text-main: #F4F6F8; /* platinum for main text, to reduce eye strain */
   --text-muted: #9EA3B0; /* cool steel */
-  --accent: #f4f6f8; /* platinum for accent, to make it pop against the dark background */
-  --accent-hover: #3D7BA5; /* cool steel for hover state, to make it pop against the dark background */
+  --accent: #FCC2C2; /* distint pink for branding */
+  --accent-hover: #E8a5A5; /* slightly darker pink for hover state */
   --radius: 10px;
   --spacing: 8px;
-  --positive: #7FD98A; /* green for gains */
-  --negative: #E88C7D; /* red for losses, but also avoids clashing with the warm colour palette */
+  --positive: #7FD98A; /* green colour-coding for gains */
+  --negative: #E88C7D; /* red colour-coding for losses, but also avoids clashing with the colour palette */
 }
 
 * { box-sizing: border-box; } /* this makes the padding not ruin the element's width */
@@ -139,7 +139,7 @@ h1, h2, h3, .card-title {
   to { transform: translateX(-33.333%); }
 }
 
-/* Respects users who've asked their OS/browser to reduce motion */
+/* This respects users who have asked their OS/browser to reduce motion */
 @media (prefers-reduced-motion: reduce) {
   .ticker-track { animation: none; }
 }
@@ -157,7 +157,7 @@ main {
 
 .input-panel, .results-dashboard {
   background: var(--bg-card);
-  border-radius: var(--radius);
+  border-radius: 0;
   padding: calc(var(--spacing) * 3);
 }
 
@@ -168,7 +168,7 @@ input, select, button {
   font-family: "Inter", sans-serif;
   font-size: 1rem;
   padding: calc(var(--spacing) * 1.5) calc(var(--spacing) * 1.25); /* more vertical padding */
-  min-height: 44px; /* ensures touch target meets the accessibility minimum of 44px */
+  min-height: 44px; /* this makes sure the touch target meets the accessibility minimum of 44px */
   border-radius: var(--radius);
   border: 1px solid var(--text-main);
   background: var(--bg-page);
@@ -237,7 +237,7 @@ button:hover {
   box-shadow: 0 2px 10px rgba(244, 246, 248, 0.2);
 }
 
-/* Visible focus indicator for keyboard users - demonstrating accessibility */
+/* Visible focus indicator for keyboard users. This demonstrates accessibility */
 input:focus-visible,
 select:focus-visible,
 button:focus-visible {
@@ -291,7 +291,7 @@ button:focus-visible {
 .card {
   background: var(--bg-page);
   color: var(--text-main);
-  border-radius: var(--radius);
+  border-radius: 0;
   padding: calc(var(--spacing) * 2.5);
   margin: calc(var(--spacing) * 1.25);
   transition: box-shadow 0.25s ease;
@@ -304,13 +304,26 @@ button:focus-visible {
 
 .card p { margin: 4px 0; }
 
-/* colour codes gain vs loss, based on user feedback that the plain text didn't stand out enough */
+/* this is the colour-coding for gain vs loss, based on user feedback that the plain text didn't stand out enough */
 .positive { color: var(--positive); font-weight: 600; }
 .negative { color: var(--negative); font-weight: 600; }
+
+.asset-description {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  margin-bottom: calc(var(--spacing) * 2);
+}
+
 
 .chart-container {
   margin-top: calc(var(--spacing) * 5);
   padding: calc(var(--spacing) * 2);
+}
+
+#tradingview-chart {
+  height: 400px;
+  width: 100%;
 }
 
 .chart-heading {
@@ -361,7 +374,7 @@ button:focus-visible {
 }
 
 .chart-bar.now {
-  background: var(--accent); /* bright highlight for the "Now" bar */
+  background: var(--accent); /* accented highlight for the "Now" bar */
 }
 
 .chart-bar-label {
@@ -379,4 +392,28 @@ button:focus-visible {
 /* For wider screens, display cards in a 3-column grid */
 @media (min-width: 64rem) {
   .cards { display: grid; grid-template-columns: repeat(3, 1fr); }
+}
+
+
+/* Tighten up padding and spacing on wide screens, and narrow the overall layout so it doesn't stretch too wide */
+@media (min-width: 64rem) {
+  main{
+    max-width: 760px;
+  }
+  .card {
+    padding: calc(var(--spacing) * 1.5);
+  }
+
+  .card-title {
+    font-size: 0.95rem;
+    margin-bottom: calc(var(--spacing) * 0.5);
+  }
+
+  .card p {
+    margin: 2px 0;
+  }
+
+  .input-panel, .results-dashboard {
+    padding: calc(var(--spacing) * 2);
+  }
 }

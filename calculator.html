@@ -9,8 +9,9 @@
     <!-- Preconnect makes the Google Fonts request faster -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Loads Inter (body text) and Rubik (headings) -->
+    <!-- Loads Inter (for the body text) and Rubik (for the headings) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rubik:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:,">
 
     <link rel="stylesheet" href="./style.css" />
   </head>
@@ -42,6 +43,7 @@
             <select id="asset" name="asset" required>
               <option value="" disabled selected>Select an asset</option>
             </select>
+            <p id="asset-description" class="asset-description" aria-live="polite"></p>
           </div>
           <button type="submit" class="calculate-btn">Calculate</button>
         </form>
@@ -62,11 +64,14 @@
   <div class="cards" id="results-cards"></div>
   <div class="chart-container" id="results-chart" aria-hidden="true">
   <p class="chart-heading">Price trend (1 year ago → now)</p>
+  <div class="tradingview-widget-container">
+      <div id="tradingview-chart"></div>
+  </div>
 </div>
     </section>
     </main>
 
-<!-- Disclaimer banner - covers the ethical messaging implication (not financial advice) -->
+<!-- Disclaimer banner which covers the ethical messaging implication (figures are not financial advice) -->
     <div class="disclaimer" role="note">
       <p><strong>This is an educational tool only.</strong> Figures are for learning purposes and are not financial advice.</p>
     </div>
@@ -74,5 +79,6 @@
 
     <!-- defer means this runs after the HTML has fully loaded -->
     <script src="./script.js" defer></script>
+    <script src="https://s3.tradingview.com/tv.js" defer></script>
   </body>
 </html>
