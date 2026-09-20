@@ -309,7 +309,7 @@ button:focus-visible {
 
 .asset-description {
   font-size: 0.85rem;
-  color: var(--text-muted);
+  color: var(--text-main);
   margin-top: 4px;
   margin-bottom: calc(var(--spacing) * 2);
 }
