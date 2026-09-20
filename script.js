@@ -86,7 +86,7 @@ function getComparisonDates() {
 async function fetchCurrentPrices(coinIds) {
   const url = `${COINGECKO_BASE}/simple/price?ids=${coinIds.join(",")}&vs_currencies=nzd&x_cg_demo_api_key=${COINGECKO_API_KEY}`;  const response = await fetch(url);
   if (!response.ok) {
-    throw new Error('CoinGecko current price error: ${response.status}');
+    throw new Error(`CoinGecko current price error: ${response.status}`);
   }
   return response.json();
 }
@@ -96,11 +96,11 @@ async function fetchHistoricalPrice(coinid, dateStr) {
   const url = `${COINGECKO_BASE}/coins/${coinid}/history?date=${dateStr}&x_cg_demo_api_key=${COINGECKO_API_KEY}`;
   const response = await fetch(url);
   if (!response.ok) {
-    throw new Error('CoinGecko history error: ${response.status}');
+    throw new Error(`CoinGecko history error: ${response.status}`);
   }
   const data = await response.json();
   if (!data.market_data) {
-    throw new Error('No historical data for ${coinid} on ${dateStr}');
+    throw new Error(`No historical data for ${coinid} on ${dateStr}`);
   }
   return data.market_data.current_price.nzd;
   }
