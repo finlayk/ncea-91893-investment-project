@@ -227,7 +227,6 @@ button:hover {
 
 .calculate-btn:hover {
   background-color: var(--accent-hover);
-  color: var(--text-main);
   transform: translateY(-2px);
   box-shadow: 0 8px 28px rgba(244, 246, 248, 0.35);
 }
