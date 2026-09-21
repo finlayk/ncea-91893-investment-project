@@ -226,8 +226,11 @@ function renderCards(amount, asset) {
 
 // This draws a bar chart comparing what the investment would be worth after each timeframe
 function renderChart(amount, asset) {
-  const chartContainer = document.getElementById("results-chart");
+  const chartContainer = document.getElementById("bar-chart");
   if (!chartContainer) return;
+
+  document.getElementById("tradingview-wrap")?.classList.add("hidden"); // hide the TradingView chart if we're showing the bar chart instead
+  chartContainer.classList.remove("hidden"); // show the bar chart container
 
   const bars = [
     { label: "1yr ago", value: calculatePastValue(amount, asset.priceOneYearAgo, asset.priceNow).value },
@@ -285,6 +288,9 @@ function renderTradingViewChart(amount, asset) {
     renderChart(amount, asset);
     return;
   }
+
+  document.getElementById("bar-chart").classList.add("hidden"); // hide the bar chart if we're showing the TradingView chart instead
+  document.getElementById("tradingview-wrap").classList.remove("hidden"); // show the TradingView chart container
 
   container.innerHTML = "";
 
