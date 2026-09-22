@@ -231,6 +231,12 @@ button:hover {
   box-shadow: 0 8px 28px rgba(244, 246, 248, 0.35);
 }
 
+.calculate-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .calculate-btn:active {
   transform: translateY(0);
   box-shadow: 0 2px 10px rgba(244, 246, 248, 0.2);

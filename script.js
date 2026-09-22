@@ -5,6 +5,7 @@ const statusMessage = document.getElementById("status-message");
 const resultsCards = document.getElementById("results-cards");
 const dataStatusBadge = document.getElementById("data-status-badge");
 const resultsDashboard = document.getElementById("results-dashboard");
+const calculateBtn = document.getElementById("calculate-btn");
 const calculationAnnouncement = document.getElementById("calculation-announcement");
 
 // This holds the asset data once it has loaded from data.json, initially it starts empty
@@ -326,10 +327,21 @@ form.addEventListener("submit", (event) => {
     return;
   }
 
-  resultsDashboard.classList.remove("hidden"); // reveal results now that we have valid data
-  renderCards(amount, asset);
-  renderTradingViewChart(amount, asset);
-   calculationAnnouncement.textContent = `Results updated for $${amount} invested in ${asset.name}.`;
+  // Show a loading state so the user knows their click registered (added after tester feedback)
+  // A short delay is added so the loading state is actually visible and blocks rapid repeat clicks
+  calculateBtn.disabled = true;
+  calculateBtn.textContent = "Calculating...";
+
+  setTimeout(() => {
+    resultsDashboard.classList.remove("hidden");
+    renderCards(amount, asset);
+    renderTradingViewChart(amount, asset);
+    calculationAnnouncement.textContent = `Results updated for $${amount} invested in ${asset.name}.`;
+
+    // Return the button to normal once results are shown
+    calculateBtn.disabled = false;
+    calculateBtn.textContent = "Calculate";
+  }, 400);
 });
 
 
